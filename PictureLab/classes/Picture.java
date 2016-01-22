@@ -135,7 +135,7 @@ public class Picture extends SimplePicture
       {
         
         leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
+        rightPixel = pixels[row]                     
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
@@ -217,7 +217,25 @@ public class Picture extends SimplePicture
     }
   }
   
-  
+  public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow, int startSourceCol, int endSourceCol, int startDestRow, int startDestCol)
+  {
+      Pixel[][] pixels = sourcePicture.getPixels2D();
+      for(int y=0; y < pixels.length; y++)
+      {
+          for(int x=0; x < pixels[y].length; x++)
+          {
+              if(x >= startSourceCol && x <= endSourceCol && y>= startSourceRow && y<= endSourceRow)
+              {
+                  this.getPixel((y + startDestRow), (x + startDestCol)).setColor(sourcePicture.getPixel(y, x).getColor());
+              }
+          }
+      }
+  }
+  //public void cropAndCopyNew(Picture)
+  public void scaleByHalf()
+  {
+      this.scale(2, 2);
+  }
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
