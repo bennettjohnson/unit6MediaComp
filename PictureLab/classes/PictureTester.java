@@ -68,7 +68,6 @@ public class PictureTester
       {
           for(int col=0; col < markPixels[0].length; col++)
           {
-           
                if (col < 300 || row < 170 || col > 430 || row > 360)
               {
                   markPixels[row][col].setRed(pixels[row][col].getRed());
@@ -93,9 +92,6 @@ public class PictureTester
               markPixels[row][col].setRed((pixels[row][col].getRed() + markPixels[row][col].getRed()) / 2 );
               markPixels[row][col].setBlue((pixels[row][col].getBlue() + markPixels[row][col].getBlue()) / 2 );
               markPixels[row][col].setGreen((pixels[row][col].getGreen() + markPixels[row][col].getGreen()) / 2 );
-              
-              
-             
           }
       }
       
@@ -109,17 +105,68 @@ public class PictureTester
               pixels[row][col].setBlue(pixels[row][col].getBlue() + ((row * col) / 1000));
           }
       }
-      baseImage.addMessage("AYYY", 100, 100);
-      baseImage.addMessage("WEW LAD", 400, 200);
-      baseImage.addMessage("TOP KEK", 500, 400);
-      baseImage.addMessage("MEME", 600, 75);
-      baseImage.addMessage("MARK", 600, 460);
-      baseImage.addMessage("JAVA RULZ!!!!!1!", 10, 460);
-      baseImage.addMessage("SWAG M8", 30, 260);
-      
       
       baseImage.explore();
   }
+  public static void newCollage()
+  {
+      Picture space = new Picture("space.jpg");
+      Picture mark = new Picture("blue-mark.jpg");
+      Picture base = new Picture("1920x1080.jpg");
+      
+      Pixel[][] spaceArr = space.getPixels2D();
+      Pixel[][] markPixels = mark.getPixels2D();
+      Pixel[][] baseArr = base.getPixels2D();
+      
+      for(int row=0; row < markPixels.length; row++)
+      {
+          for(int col=0; col < markPixels[0].length; col++)
+          {
+               if (col < 300 || row < 170 || col > 430 || row > 360)
+              {
+                  markPixels[row][col].setRed(spaceArr[row][col].getRed());
+                  markPixels[row][col].setGreen(spaceArr[row][col].getGreen());
+                  markPixels[row][col].setBlue(spaceArr[row][col].getBlue());
+              } 
+              else
+              {
+                 if(markPixels[row][col].getBlue() > 55 && markPixels[row][col].getBlue() < 90 && markPixels[row][col].getRed() < 25)
+                 {
+                  markPixels[row][col].setRed(spaceArr[row][col].getRed());
+                  markPixels[row][col].setGreen(spaceArr[row][col].getGreen());
+                  markPixels[row][col].setBlue(spaceArr[row][col].getBlue());
+                  } 
+                 if(row > 300 && markPixels[row][col].getRed() > 140 && markPixels[row][col].getGreen() > 140 && markPixels[row][col].getBlue() > 130)
+                 {
+                  markPixels[row][col].setRed(spaceArr[row][col].getRed());
+                  markPixels[row][col].setGreen(spaceArr[row][col].getGreen());
+                  markPixels[row][col].setBlue(spaceArr[row][col].getBlue());
+                 }
+              } 
+              markPixels[row][col].setRed((spaceArr[row][col].getRed() + markPixels[row][col].getRed()) / 2 );
+              markPixels[row][col].setBlue((spaceArr[row][col].getBlue() + markPixels[row][col].getBlue()) / 2 );
+              markPixels[row][col].setGreen((spaceArr[row][col].getGreen() + markPixels[row][col].getGreen()) / 2 );
+          }
+      }
+      space.cropAndCopy(mark, 0, 630, 0, 470, 0, 0);
+      base.cropAndCopy(space, 0, 630, 0, 480, 0, 0);
+      base.cropAndCopy(space, 0, 630, 0, 480, 530, 0);
+      base.cropAndCopy(space, 0, 630, 0, 480, 1060, 0);
+      base.cropAndCopy(space, 0, 630, 0, 480, 0, 480);
+      base.cropAndCopy(space, 0, 630, 0, 480, 530, 480);
+      base.cropAndCopy(space, 0, 630, 0, 480, 1060, 480);
+      for(int row=0; row < baseArr.length; row++)
+      {
+          for(int col=0; col < baseArr[row].length; col++)
+          {
+              baseArr[row][col].setRed(baseArr[row][col].getRed() + col / 6);
+              baseArr[row][col].setGreen(baseArr[row][col].getGreen() + row / 8);
+              baseArr[row][col].setBlue(baseArr[row][col].getBlue() + ((row * col) / 1000));
+          }
+      }
+      base.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
